@@ -15,16 +15,18 @@ import total_order from '../image/total_order.png';
 import total_revenue from '../image/total_revenue.png';
 import total_Deliver from '../image/total_Deliver.png';
 import total_cancell from '../image/remove.png';
+import Goal from '../pages/Goal'
+import Modal from '../pages/Modal'
 
 const Home = () => {
-  const [modalContent, setModalContent] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleItemClick = (item) => {
-    setModalContent(item);
+    setSelectedItem(item);
   };
 
   const handleCloseModal = () => {
-    setModalContent(null);
+    setSelectedItem(null);
   };
 
   const data = [
@@ -125,20 +127,10 @@ const Home = () => {
         </div>
       </div>
 
-      {modalContent && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-1/2">
-            <h2 className="text-xl font-bold mb-4">Details for {modalContent}</h2>
-            <p className="mb-4">Here you can add more details or actions related to {modalContent}.</p>
-            <button
-              onClick={handleCloseModal}
-              className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      <Modal isOpen={!!selectedItem} onClose={() => setSelectedItem(null)}>
+        {selectedItem && <Goal item={selectedItem} />}
+      </Modal>
+
     </div>
   );
 };
